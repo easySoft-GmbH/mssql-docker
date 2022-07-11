@@ -30,18 +30,5 @@ jobs:
             password: ${{ secrets.REGISTRY_PASSWORD }}
         - run: |
             docker build -f ./windows/mssql-server-windows-developer/LTSC2022.dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/mssql-server-windows-developer:2017-LTSC2022-${{ github.sha }} ./windows/mssql-server-windows-developer/
-            docker tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/es_flowprotocol:${{ github.sha }} ${{ secrets.REGISTRY_LOGIN_SERVER }}/mssql-server-windows-developer:2017-LTSC2022
+            docker tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/mssql-server-windows-developer:2017-LTSC2022-${{ github.sha }} ${{ secrets.REGISTRY_LOGIN_SERVER }}/mssql-server-windows-developer:2017-LTSC2022
             docker push --all-tags ${{ secrets.REGISTRY_LOGIN_SERVER }}/mssql-server-windows-developer
-
-        - name: 'Deploy to Azure Container Instances'
-          uses: 'azure/aci-deploy@v1'
-          with:
-            resource-group: ${{ secrets.RESOURCE_GROUP }}
-            dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ github.run_number }}
-            image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/mssql-server-windows-developer:2017-LTSC2022-${{ github.sha }}
-            registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-            registry-username: ${{ secrets.REGISTRY_USERNAME }}
-            registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-            name: mssql-server-windows-developer
-            location: 'westeurope'
-            restart-policy: OnFailure
