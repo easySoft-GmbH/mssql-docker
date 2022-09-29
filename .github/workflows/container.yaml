@@ -54,25 +54,3 @@ jobs:
             docker build -f ./windows/mssql-server-windows-developer/LTSC2019.dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/mssql-server-windows-developer:2017-LTSC2019-${{ github.sha }} ./windows/mssql-server-windows-developer/
             docker tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/mssql-server-windows-developer:2017-LTSC2019-${{ github.sha }} ${{ secrets.REGISTRY_LOGIN_SERVER }}/mssql-server-windows-developer:2017-LTSC2019
             docker push --all-tags ${{ secrets.REGISTRY_LOGIN_SERVER }}/mssql-server-windows-developer
-    build-and-deploy-20H2:
-        runs-on: windows-2022
-        steps:
-        # checkout the repo
-        - name: 'Checkout GitHub Action'
-          uses: actions/checkout@main
-          
-        - name: 'Login via Azure CLI'
-          uses: azure/login@v1
-          with:
-            creds: ${{ secrets.AZURE_CREDENTIALS }}
-        
-        - name: 'Build and push image'
-          uses: azure/docker-login@v1
-          with:
-            login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-            username: ${{ secrets.REGISTRY_USERNAME }}
-            password: ${{ secrets.REGISTRY_PASSWORD }}
-        - run: |
-            docker build -f ./windows/mssql-server-windows-developer/20H2.dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/mssql-server-windows-developer:2017-20H2-${{ github.sha }} ./windows/mssql-server-windows-developer/
-            docker tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/mssql-server-windows-developer:2017-20H2-${{ github.sha }} ${{ secrets.REGISTRY_LOGIN_SERVER }}/mssql-server-windows-developer:2017-20H2
-            docker push --all-tags ${{ secrets.REGISTRY_LOGIN_SERVER }}/mssql-server-windows-developer
