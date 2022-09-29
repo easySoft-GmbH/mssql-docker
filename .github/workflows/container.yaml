@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-    build-and-deploy:
+    build-and-deploy-2022:
         runs-on: windows-2022
         steps:
         # checkout the repo
@@ -32,7 +32,7 @@ jobs:
             docker build -f ./windows/mssql-server-windows-developer/LTSC2019.dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/mssql-server-windows-developer:2017-LTSC2019-${{ github.sha }} ./windows/mssql-server-windows-developer/
             docker tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/mssql-server-windows-developer:2017-LTSC2019-${{ github.sha }} ${{ secrets.REGISTRY_LOGIN_SERVER }}/mssql-server-windows-developer:2017-LTSC2019
             docker push --all-tags ${{ secrets.REGISTRY_LOGIN_SERVER }}/mssql-server-windows-developer
-    build-and-deploy:
+    build-and-deploy-2019:
         runs-on: windows-2019
         steps:
         # checkout the repo
@@ -54,7 +54,7 @@ jobs:
             docker build -f ./windows/mssql-server-windows-developer/LTSC2019.dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/mssql-server-windows-developer:2017-LTSC2019-${{ github.sha }} ./windows/mssql-server-windows-developer/
             docker tag ${{ secrets.REGISTRY_LOGIN_SERVER }}/mssql-server-windows-developer:2017-LTSC2019-${{ github.sha }} ${{ secrets.REGISTRY_LOGIN_SERVER }}/mssql-server-windows-developer:2017-LTSC2019
             docker push --all-tags ${{ secrets.REGISTRY_LOGIN_SERVER }}/mssql-server-windows-developer
-    build-and-deploy:
+    build-and-deploy-20H2:
         runs-on: windows-2022
         steps:
         # checkout the repo
