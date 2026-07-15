@@ -3,9 +3,11 @@ FROM mcr.microsoft.com/windows/servercore:ltsc2022
 LABEL maintainer "Perry Skountrianos"
 
 # Download Links:
-# SQL Server 2016 Developer SP1:
-ENV exe "https://go.microsoft.com/fwlink/?linkid=840945"
-ENV box "https://go.microsoft.com/fwlink/?linkid=840944"
+# SQL Server 2016 SP2 Developer (the go.microsoft.com/fwlink/?linkid=840945/840944
+# links now redirect to SQL Server 2017 media, so direct download.microsoft.com
+# URLs are used here instead):
+ENV exe "https://download.microsoft.com/download/4/1/A/41AD6EDE-9794-44E3-B3D5-A1AF62CD7A6F/sql16_sp2_dlc/en-us/SQLServer2016SP2-FullSlipstream-DEV-x64-ENU.exe"
+ENV box "https://download.microsoft.com/download/4/1/A/41AD6EDE-9794-44E3-B3D5-A1AF62CD7A6F/sql16_sp2_dlc/en-us/SQLServer2016SP2-FullSlipstream-DEV-x64-ENU.box"
 
 ENV sa_password="_" \
     attach_dbs="[]" \
