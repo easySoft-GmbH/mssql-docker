@@ -5,6 +5,7 @@ This Dockerfile helps developers to get started using SQL Server vNext in Window
 
 [About this sample](#about-this-sample)<br/>
 [Before you begin](#before-you-begin)<br/>
+[Build and run the SQL Server 2022 image](#build-and-run-the-sql-server-2022-image)<br/>
 [Run this sample](#run-this-sample)<br/>
 [Sample details](#sample-details)<br/>
 [Disclaimers](#disclaimers)<br/>
@@ -40,6 +41,35 @@ docker run -d -p 1433:1433 -v C:/temp/:C:/temp/ -e sa_password=<YOUR SA PASSWORD
 - **-it** can be used to show the verbose output of the SQL startup script.
 
   Use this to debug the container in case of issues.
+
+<a name=build-and-run-the-sql-server-2022-image></a>
+
+## Build and run the SQL Server 2022 image
+
+The [`2022-LTSC2022.dockerfile`](2022-LTSC2022.dockerfile) builds SQL Server 2022 Developer on the Windows Server Core LTSC 2022 base image. It downloads the SQL Server installation media from Microsoft and configures the default instance to listen on TCP port 1433.
+
+Use a Windows-container Docker engine on a host compatible with the `ltsc2022` base image. From the repository root, build the image with process isolation and a 4 GB memory limit:
+
+```powershell
+docker build --isolation=process --memory=4g `
+  -f windows\mssql-server-windows\2022-LTSC2022.dockerfile `
+  -t mssql-server-windows:2022-ltsc2022 `
+  windows\mssql-server-windows
+```
+
+Run the image with the same isolation and memory settings:
+
+```powershell
+docker run --detach --isolation=process --memory=4g `
+  --name mssql-server-2022 `
+  --publish 1433:1433 `
+  --env "sa_password=<YOUR_STRONG_SA_PASSWORD>" `
+  --env "ACCEPT_EULA=Y" `
+  --env "attach_dbs=[]" `
+  mssql-server-windows:2022-ltsc2022
+```
+
+Replace `<YOUR_STRONG_SA_PASSWORD>` with a strong password before running the command. The container health check runs `sqlcmd -Q "select 1"`. To remove the container when finished, run `docker rm --force mssql-server-2022`.
 
 <a name=run-this-sample></a>
 
